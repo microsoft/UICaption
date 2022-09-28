@@ -1,14 +1,28 @@
-# Project
+# UICaption dataset
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+We release the UICaption dataset consisting of UI images paired with descriptions of their functionality. This dataset was used to train Lexi, a pre-trained vision and language model for UI language understanding. The dataset and model are presented in "Lexi: Self-Supervised Learning of the UI Language" by Pratyay Banerjee, Shweti Mahajan, Kushal Arora, Chitta Baral, and Oriana Riva.
 
-As the maintainer of this project, please make a few updates:
+UICaption is released as a workflow by which you can generate the dataset. 
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+If you used this dataset please cite the following paper:
+
+
+
+# Generate UICaption dataset
+
+### Crawl images and text from support websites
+
+Use the compiled list of public support and how-to websites to extract UI images and associated descriptions from the web:
+
+```
+python crawl_supp_websites.py
+```
+
+### Generate image-text pairs
+
+```
+python uicaption_gen.py
+```
 
 ## Contributing
 
