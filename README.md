@@ -6,23 +6,46 @@ UICaption is released as a workflow by which you can generate the dataset.
 
 If you used this dataset please cite the following paper:
 
-
+``` bibtex
+@inproceedings{oriva:lexi22,
+  title = {Lexi: Self-Supervised Learning of the UI Language},
+  author = {Pratyay Banerjee and Shweti Mahajan and Kushal Arora and Chitta Baral and Oriana Riva},
+  booktitle = {TBD},
+  year = {2022},
+  month = dec,
+  doi = {TBD}
+}
+```
 
 # Generate UICaption dataset
 
-### Crawl images and text from support websites
+### Crawl images and texts from support websites
 
-Use the compiled list of public support and how-to websites to extract UI images and associated descriptions from the web:
+Use the compiled list of support and how-to websites provided in `tech_url.txt` to extract UI images and associated descriptions from the web. Save the output to a folder, e.g., `crawled_uidata`:
 
 ```
-python crawl_supp_websites.py
+python crawl_uidata.py -i tech_urls.txt -o crawled_uidata
 ```
 
 ### Generate image-text pairs
 
+Use the crawled UI data to assemble the UI caption dataset.
 ```
-python uicaption_gen.py
+python gen_uicaption.py -i crawled_uidata -o ui_caption_dataset.json
 ```
+
+The same UI image may appear in multiple websites, hence the script associates to each UI image one or multiple alt-text descriptions and instructions. The script produces a json file with the following format:
+
+|Name|Description|
+|----|-----------|
+|image_path| path at which the UI image is stored|
+|alt_text_list| one or multiple alt-texts associated with the UI image|
+|instruction_list| one or more instructions associated with the UI image|
+
+
+## Disclaimer
+
+The code and dataset in this repository are intended to be used for research purposes. Microsoft takes no responsibility for what users use this tool for or for any damages caused from using this code. By downloading and using this software, you agree that you take full responsibility for any damages and liability.
 
 ## Contributing
 
