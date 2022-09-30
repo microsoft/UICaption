@@ -2,7 +2,7 @@
 
 We release the UICaption dataset consisting of UI images paired with descriptions of their functionality. This dataset was used to train Lexi, a pre-trained vision and language model for UI language understanding. The dataset and model are presented in "Lexi: Self-Supervised Learning of the UI Language" by Pratyay Banerjee, Shweti Mahajan, Kushal Arora, Chitta Baral, and Oriana Riva.
 
-UICaption is released as a workflow by which you can generate the dataset. 
+UICaption is released as a workflow by which you can generate the actual data. 
 
 If you used this dataset please cite the following paper:
 
@@ -21,20 +21,26 @@ If you used this dataset please cite the following paper:
 
 ### Crawl images and texts from support websites
 
-Use the compiled list of support and how-to websites provided in `tech_url.txt` to extract UI images and associated descriptions from the web. Save the output to a folder, e.g., `crawled_uidata`:
+Use the compiled list of support and how-to websites provided in `tech_urls.txt` to extract UI images and associated descriptions from the web. Save the output to a folder, e.g., `crawled_uidata`:
 
 ```
 python crawl_uidata.py -i tech_urls.txt -o crawled_uidata
 ```
+This script will generate three files stored in the specified output folder: `ui_images.txt` which contains URLs of the UI images, `ui_alt_texts.csv` which contains alt-text associated with each UI image, and `ui_instructions.csv` which contains texts appearing before or after the image occurence in the webpage.
+
+Then download the UI images:
+```
+python download_images.py -i crawled_uidata/ui_images.txt
+```
 
 ### Generate image-text pairs
 
-Use the crawled UI data to assemble the UI caption dataset.
+Finally, use the crawled UI data to assemble the UICaption dataset:
 ```
-python gen_uicaption.py -i crawled_uidata -o ui_caption_dataset.json
+python gen_uicaption_dataset.py -i crawled_uidata -o ui_caption_dataset.json
 ```
 
-The same UI image may appear in multiple websites, hence the script associates to each UI image one or multiple alt-text descriptions and instructions. The script produces a json file with the following format:
+The same UI image may appear in multiple websites, hence the script associates one or multiple alt-text descriptions and instructions with each UI image. The script produces a json file with the following format:
 
 |Name|Description|
 |----|-----------|
