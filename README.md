@@ -26,7 +26,7 @@ Use the compiled list of support and how-to websites provided in `tech_urls.txt`
 ```
 python crawl_uidata.py -i tech_urls.txt -o crawled_uidata
 ```
-This script will generate three files stored in the specified output folder: `ui_images.txt` which contains URLs of the UI images, `ui_alt_texts.csv` which contains alt-text associated with each UI image, and `ui_instructions.csv` which contains texts appearing before or after the image occurence in the webpage.
+This script will generate three files stored in the specified output folder: `ui_images.p` which contains URLs of the UI images, `ui_alt_texts.csv` which contains alt-text associated with each UI image, `ui_instructions_preceding.csv` and `ui_instructions_succeeding.csv` which contains texts appearing before and after the image occurence in the webpage respectively.
 
 Then download the UI images:
 ```
