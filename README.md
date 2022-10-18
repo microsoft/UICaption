@@ -10,10 +10,10 @@ If you used this dataset please cite the following paper:
 @inproceedings{oriva:lexi22,
   title = {Lexi: Self-Supervised Learning of the UI Language},
   author = {Pratyay Banerjee and Shweti Mahajan and Kushal Arora and Chitta Baral and Oriana Riva},
-  booktitle = {TBD},
+  publisher = {Association for Computational Linguistics},
+  booktitle = {Proc. of the 2022 Conference on Empirical Methods in Natural Language Processing},
   year = {2022},
-  month = dec,
-  doi = {TBD}
+  month = {December}
 }
 ```
 
