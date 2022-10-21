@@ -6,7 +6,7 @@ import csv
 import argparse
 from tqdm import tqdm
 import sys
-from image_scraper_v2.utils import *
+from UICaption.utils import *
 
 parser = argparse.ArgumentParser()
     
