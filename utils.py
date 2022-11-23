@@ -13,6 +13,42 @@ from bs4 import BeautifulSoup
 
 import logging
 
+def filter_text(tag_text):
+    """
+    This returns True if the number of words in the text is less than 3
+    """
+    if len(tag_text.split(' ')) > 2:
+        return False
+    else:
+        return True
+
+def clean_text(extracted_text):
+    """
+    This function cleans th etext for any extra spaces or newlines.
+    """
+    return ' '.join(extracted_text.split())
+
+def write_list(list_to_write, fname):
+    import pickle
+    """
+    Write python list to a pickle file.
+    """
+    # Save all the website urls extracted
+    with open(fname, 'wb') as out_file:
+        pickle.dump(list_to_write, out_file)
+
+def write_dict(folder_path, dict_to_write, fname, fieldnames):
+    """
+    Write a dictionary to a file.
+    """
+    output_fname = os.path.join(folder_path, fname)
+    print(f'Writing : {output_fname}')
+    with open(output_fname, 'wt') as out_file:
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames, delimiter='\t')
+        for key, value in dict_to_write.items():
+            data = {fieldnames[0]: key, fieldnames[1]: value}
+            writer.writerow(data)
+
 def collect_web_urls(file_path):
     """
     Reads a url text file for urls and extracts all the web urls saved.
@@ -83,14 +119,14 @@ def extract_images(website_urls, folder_path):
         
     
     # Dump all image_urls
-    write_list(image_urls, os.path.join(query_folder_path, 'ui_images.p'))
+    write_list(image_urls, os.path.join(folder_path, 'ui_images.p'))
 
     # Write the image url dictionaries
-    write_dict(query_folder_path, img_url_to_caption, 'ui_alt_texts.csv', ['Image_Url', 'Image_Alt_Text'])
-    write_dict(query_folder_path, img_url_to_text_above, 'ui_instructions_preceding.csv', ['Image_Url', 'Text_Above'])
-    write_dict(query_folder_path, img_url_to_text_below, 'ui_instructions_succeeding.csv', ['Image_Url', 'Text_Below'])
+    write_dict(folder_path, img_url_to_caption, 'ui_alt_texts.csv', ['Image_Url', 'Image_Alt_Text'])
+    write_dict(folder_path, img_url_to_text_above, 'ui_instructions_preceding.csv', ['Image_Url', 'Text_Above'])
+    write_dict(folder_path, img_url_to_text_below, 'ui_instructions_succeeding.csv', ['Image_Url', 'Text_Below'])
     # Classnames can be useful in filtering noisy images like ads etc.
-    write_dict(query_folder_path, img_url_to_class_name, 'ui_image_url_to_image_class_names.csv', ['Image_Url', 'Class_Name'])
+    write_dict(folder_path, img_url_to_class_name, 'ui_image_url_to_image_class_names.csv', ['Image_Url', 'Class_Name'])
 
 
 def fetch_images(website_url):
@@ -203,3 +239,25 @@ def download_images(image_urls, query_folder_path):
                 img_url_to_img_id[image_url] = img_fname
             data = {"Image_Url": image_url, "Image_Name": img_fname}
             writer.writerow(data)
+
+def persist_image(folder_path:str, url:str):
+    """
+    Downloads an image using the image src url and returns the image file-path.
+    If the image cannot be downloaded, it returns an empty string.
+    """
+    try :
+        image_content = requests.get(url, timeout=10).content
+    except Exception as e:
+        #print(f"ERROR - Could not download {url} - {e}")
+        return ''
+
+    fname = os.path.join(folder_path,hashlib.sha1(image_content).hexdigest()[:10] + '.jpg')
+    try:
+        img_file = open(fname, "wb")
+        img_file.write(image_content)
+        img_file.close()
+    except Exception as e:
+        print(f"ERROR - Could not save {url} - {e}")
+        return ''
+    
+    return fname

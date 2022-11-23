@@ -12,17 +12,18 @@ import pickle
 from urllib.request import urlopen
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
-from UICaption.utils import extract_orig_dname, download_images
+import sys 
+from .utils import download_images
 
 parser = argparse.ArgumentParser()
     
-parser.add_argument("--i", help='Absolute path to the image url file.', required=True)
+#parser.add_argument("--i", help='Absolute path to the image url file.', required=True)
 
 args = parser.parse_args()
 
-img_url_fname = args.i
+image_url_fname = "./ui_images.p"#args.i
 
-folder_path = os.path.split()[0]
+folder_path = os.path.split(image_url_fname)[0]
 
 # Read all image_urls 
 with open(image_url_fname, 'rb') as in_file:

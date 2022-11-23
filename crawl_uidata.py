@@ -6,14 +6,14 @@ import csv
 import argparse
 from tqdm import tqdm
 import sys
-from UICaption.utils import *
+from .utils import *
 
 parser = argparse.ArgumentParser()
     
 parser.add_argument("--o", help='Absolute path of output data folder.', required=True)
 parser.add_argument("--i", help='Absolute path of input url text file.', required=True)
 
-args = parser.parse_args()
+#args = parser.parse_args()
 
 folder_path = args.o
 url_file = args.i
