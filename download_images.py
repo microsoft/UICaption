@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser()
 
 args = parser.parse_args()
 
-image_url_fname = "./ui_images.p"#args.i
+image_url_fname = args.i
 
 folder_path = os.path.split(image_url_fname)[0]
 
